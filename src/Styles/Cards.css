@@ -1,0 +1,9 @@
+.cards {
+  text-align: center !important;
+  padding: 1rem;
+}
+.cards.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
+}

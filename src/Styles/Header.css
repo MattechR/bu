@@ -1,0 +1,10 @@
+.title h1 {
+  padding: 1rem;
+  font-size: 3rem;
+  letter-spacing: 2px;
+}
+.description {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}

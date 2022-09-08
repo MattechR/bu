@@ -1,48 +1,47 @@
 import Joi from "joi";
 import { useFormik } from "formik";
-import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FormikValidateUsingJoi } from "../Utils/FormikValidateUsingJoi";
 import Input from "./Common/Input";
-import Header from "./Common/Header";
-import FormikValidateUsingJoi from "../Utils/FormikValidateUsingJoi";
+import PageHeader from "./Common/PageHeader";
+import { useState } from "react";
 
 const SignUp = () => {
-  const Navigate = useNavigate();
-
   const [error, setError] = useState("");
+
   const form = useFormik({
     validateOnMount: true,
     initialValues: {
-      fullName: "",
       email: "",
-      phone: "",
       password: "",
+      name: "",
+      phone: "",
     },
     validate: FormikValidateUsingJoi({
       email: Joi.string()
         .email({ tlds: { allow: false } })
         .required()
         .label("Email"),
-      password: Joi.string().required().min(6).label("Password"),
-      fullName: Joi.string().required().min(2).label("Full-Name"),
-      phone: Joi.string().required().min(9).max(10).label("Phone"),
+      password: Joi.string().min(6).required().label("Password"),
+      name: Joi.string().min(2).required().label("Name"),
+      phone: Joi.string().min(2).required().label("Phone"),
     }),
   });
+
   return (
     <>
-      <Header
-        title={"Sign Up and Join the Force!"}
-        description={"Sign Up and Enjoy from discount and deals 😊❤️"}
+      <PageHeader
+        title="Sign Up to Burger Hut"
+        description="Get a subscription for discounts"
       />
-      <br />
+
       <form noValidate autoComplete="off" onSubmit={form.handleSubmit}>
         {error && <div className="alert alert-danger">{error}</div>}
 
         <Input
           type="text"
-          label={"Full Name"}
-          error={form.touched.fullName && form.errors.fullName}
-          {...form.getFieldProps("fullName")}
+          label="Name"
+          error={form.touched.name && form.errors.name}
+          {...form.getFieldProps("name")}
         />
         <Input
           type="email"
@@ -50,23 +49,24 @@ const SignUp = () => {
           error={form.touched.email && form.errors.email}
           {...form.getFieldProps("email")}
         />
-
         <Input
           type="password"
           label="Password"
-          error={form.touched.password && form.password.email}
+          error={form.touched.password && form.errors.password}
           {...form.getFieldProps("password")}
         />
-
         <Input
-          type="phone"
+          type="tel"
           label="Phone"
-          error={form.touched.phone && form.phone.email}
+          error={form.touched.phone && form.errors.phone}
           {...form.getFieldProps("phone")}
         />
 
         <div className="my-2">
-          <button disabled={!form.isValid} className="btn btn-primary">
+          <button
+            disabled={!form.isValid}
+            className="btn btn-primary bg-danger"
+          >
             Sign Up
           </button>
         </div>
@@ -74,4 +74,5 @@ const SignUp = () => {
     </>
   );
 };
+
 export default SignUp;

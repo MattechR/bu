@@ -1,13 +1,15 @@
-import { useFormik } from "formik";
 import { useState } from "react";
 import Joi from "joi";
-import FormikValidateUsingJoi from "../Utils/FormikValidateUsingJoi";
+import { useFormik } from "formik";
 import Input from "./Common/Input";
-import Header from "./Common/Header";
+import PageHeader from "./Common/PageHeader";
+import FormikValidateUsingJoi from "../Utils/FormikValidateUsingJoi";
 
-const SignIn = () => {
+const SignIn = ({ redirect }) => {
   const [error, setError] = useState("");
+
   const form = useFormik({
+    validateOnMount: true,
     initialValues: {
       email: "",
       password: "",
@@ -20,23 +22,26 @@ const SignIn = () => {
       password: Joi.string().min(6).required().label("Password"),
     }),
   });
+
   return (
     <>
-      <Header title="Sign in to your account" />
+      <PageHeader
+        title="Sign In to Burger Hut"
+        description="Sign in and order easily"
+      />
 
       <form noValidate onSubmit={form.handleSubmit}>
         {error && <div className="alert alert-danger">{error}</div>}
 
         <Input
-          type="text"
+          type="email"
           label="Email"
           error={form.touched.email && form.errors.email}
           {...form.getFieldProps("email")}
         />
-
         <Input
-          type="text"
-          label="password"
+          type="password"
+          label="Password"
           error={form.touched.password && form.errors.password}
           {...form.getFieldProps("password")}
         />
@@ -44,8 +49,8 @@ const SignIn = () => {
         <div className="my-2">
           <button
             type="submit"
-            className="btn btn-primary"
             disabled={!form.isValid}
+            className="btn btn-primary bg-danger"
           >
             Sign In
           </button>

@@ -1,0 +1,8 @@
+.header-logo {
+  display: flex;
+  flex-direction: column;
+
+  margin-inline-start: 100px;
+  margin-bottom: -50px;
+  padding: 0.5rem;
+}
